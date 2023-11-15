@@ -130,6 +130,8 @@
     }
 
     function parseLines(text) {
+        text = text.replace(/\r/g, "")
+
         let i = 0,j = 0;
         let lines = [];
         while (j < text.length) {
@@ -187,21 +189,21 @@
 
         document.getElementById('thief-book-progressSlider').value = pointer;
 
-        function createLine(i) {
+        function createLine(ptr) {
             let newLine = document.createElement('div');
             newLine.classList.add('thief-book-line');
-            let line = lines[i];
+            let line = lines[ptr];
             if (line.length < lineLength) {
                 line += '　'.repeat(lineLength - line.length);
             }
-            newLine.innerText = calProgress() + '  ' + line;
+            newLine.innerText = calProgress(ptr) + '  ' + line;
             document.getElementById('thief-book-lineBox').append(newLine);
         }
     }
 
-    function calProgress() {
-        progress = pointer / (lines.length - 1);
-        return pointer === lines.length - 1 ? '100.00%' :
+    function calProgress(ptr) {
+        progress = ptr / (lines.length - 1);
+        return ptr === lines.length - 1 ? '100.00%' :
             ('000' + ((100 * progress).toFixed(2))).slice(-5) + '%';
     }
 })();
